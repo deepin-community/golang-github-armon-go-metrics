@@ -1,0 +1,22 @@
+From: Alexandre Viau <aviau@debian.org>
+Date: Wed, 19 Jul 2017 15:50:58 -0400
+Subject: Disable network tests
+
+Forwarded: not-needed
+Last-Update: 2017-07-19
+---
+ statsite_test.go | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/statsite_test.go b/statsite_test.go
+index 5b9ee0b..a99b907 100644
+--- a/statsite_test.go
++++ b/statsite_test.go
+@@ -37,6 +37,7 @@ func TestStatsite_PushFullQueue(t *testing.T) {
+ }
+ 
+ func TestStatsite_Conn(t *testing.T) {
++	t.Skip("Skipping network test")
+ 	addr := "localhost:7523"
+ 
+ 	ln, _ := net.Listen("tcp", addr)

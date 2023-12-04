@@ -1,0 +1,31 @@
+From: Daniel Swarbrick <dswarbrick@debian.org>
+Date: Wed, 5 Jul 2023 15:35:32 +0200
+Subject: Fix prometheus.TestSetGauge test
+
+Forwarded: not-needed
+Last-Update: 2023-06-22
+---
+ prometheus/prometheus_test.go | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/prometheus/prometheus_test.go b/prometheus/prometheus_test.go
+index 6190874..2e5bd33 100644
+--- a/prometheus/prometheus_test.go
++++ b/prometheus/prometheus_test.go
+@@ -7,7 +7,6 @@ import (
+ 	"net/http"
+ 	"net/http/httptest"
+ 	"net/url"
+-	"reflect"
+ 	"strings"
+ 	"testing"
+ 	"time"
+@@ -264,7 +263,7 @@ func fakeServer(q chan string) *httptest.Server {
+ 				},
+ 			},
+ 		}
+-		if !reflect.DeepEqual(m, expectedm) {
++		if !proto.Equal(m, expectedm) {
+ 			msg := fmt.Sprintf("Unexpected samples extracted, got: %+v, want: %+v", m, expectedm)
+ 			q <- errors.New(msg).Error()
+ 		} else {
