@@ -1,0 +1,57 @@
+From: Lucas Kanashiro <kanashiro@debian.org>
+Date: Mon, 27 Jul 2020 17:46:26 -0300
+Subject: Fix MeasureSince tests on arm64
+
+Bug-Upstream: https://github.com/armon/go-metrics/issues/110
+Forwarded: no
+Author: Lucas Kanashiro <kanashiro@ubuntu.com>
+Last-Updated: 2020-07-27
+---
+ metrics_test.go | 6 +++---
+ start_test.go   | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/metrics_test.go b/metrics_test.go
+index c79fbe6..850c22a 100644
+--- a/metrics_test.go
++++ b/metrics_test.go
+@@ -206,7 +206,7 @@ func TestMetrics_MeasureSince(t *testing.T) {
+ 	if m.getKeys()[0][0] != "key" {
+ 		t.Fatalf("")
+ 	}
+-	if m.vals[0] > 0.1 {
++	if m.vals[0] > 0.5 {
+ 		t.Fatalf("")
+ 	}
+ 	if !reflect.DeepEqual(m.labels[0], labels) {
+@@ -220,7 +220,7 @@ func TestMetrics_MeasureSince(t *testing.T) {
+ 	if m.getKeys()[0][0] != "timer" || m.getKeys()[0][1] != "key" {
+ 		t.Fatalf("")
+ 	}
+-	if m.vals[0] > 0.1 {
++	if m.vals[0] > 0.5 {
+ 		t.Fatalf("")
+ 	}
+ 
+@@ -231,7 +231,7 @@ func TestMetrics_MeasureSince(t *testing.T) {
+ 	if m.getKeys()[0][0] != "service" || m.getKeys()[0][1] != "key" {
+ 		t.Fatalf("")
+ 	}
+-	if m.vals[0] > 0.1 {
++	if m.vals[0] > 0.5 {
+ 		t.Fatalf("")
+ 	}
+ }
+diff --git a/start_test.go b/start_test.go
+index 8ff5ca0..db04755 100644
+--- a/start_test.go
++++ b/start_test.go
+@@ -154,7 +154,7 @@ func Test_GlobalMetrics_MeasureSince(t *testing.T) {
+ 	if got, want := s.keys[1], k; !reflect.DeepEqual(got, want) {
+ 		t.Fatalf("got key %s want %s", got, want)
+ 	}
+-	if s.vals[1] > 0.1 {
++	if s.vals[1] > 0.5 {
+ 		t.Fatalf("val too large %v", s.vals[0])
+ 	}
+ 	if got, want := s.labels[1], labels; !reflect.DeepEqual(got, want) {
